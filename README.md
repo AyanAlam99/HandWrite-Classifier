@@ -36,3 +36,13 @@ A basic neural network with a single dense layer containing 10 neurons (one for 
 model = keras.Sequential([
     keras.layers.Dense(10, input_shape=(784,), activation='sigmoid')
 ])
+
+
+### Deep Neural Network
+A deeper neural network with an additional hidden layer of 100 neurons with ReLU activation and an output layer with 10 neurons using sigmoid activation.
+
+model = keras.Sequential([
+    keras.layers.Dense(100, input_shape=(784,), activation='relu'),
+    keras.layers.Dense(10, activation='sigmoid')
+])
+
