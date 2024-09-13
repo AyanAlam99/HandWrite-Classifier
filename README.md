@@ -16,21 +16,21 @@ To install the required dependencies, use the following command:
 pip install tensorflow keras numpy matplotlib seaborn
 ```
 
-Running the Project
+### Running the Project
 To train and evaluate the model, run the following command:
 ```bash
 python handwritten_digit_classification.py
 ```
 
 
-#Explanation
-##Data Loading
+# Explanation
+## Data Loading
 The MNIST dataset is loaded using keras.datasets.mnist.load_data(), which splits the data into training and testing sets.
 Training images are reshaped to work with CNNs, which expect 3D tensors.
 Model Architecture
 The model follows a sequential architecture with these layers:
 
-##Convolutional Layers (Conv2D):
+## Convolutional Layers (Conv2D):
 
 Two layers to extract spatial features.
 32 filters in the first layer, 64 in the second, with a 3x3 kernel size.
@@ -49,19 +49,19 @@ Output Layer (Dense):
 Fully-connected layer with 10 neurons (one for each digit) using softmax activation for probability output.
 
 
-##Model Training
+## Model Training
 The model uses the Adam optimizer and sparse categorical crossentropy loss function.
 Trained for 10 epochs with model.fit(X_train, y_train, epochs=10).
 
 
-##Model Evaluation
+## Model Evaluation
 Evaluated on the test set using model.evaluate(X_test, y_test) to measure accuracy and loss.
 Prediction and Visualization
 Predictions are made on the test data.
 
-###A confusion matrix is generated using tf.math.confusion_matrix and visualized with seaborn heatmaps to show correct and incorrect classifications.
+### A confusion matrix is generated using tf.math.confusion_matrix and visualized with seaborn heatmaps to show correct and incorrect classifications.
 
-##Additional Notes
+## Additional Notes
 
 You can experiment with different hyperparameters (e.g., number of filters, hidden layer size, training epochs) for better performance.
 Consider data augmentation to improve model generalization.
