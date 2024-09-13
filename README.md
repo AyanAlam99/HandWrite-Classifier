@@ -1,48 +1,79 @@
-# MNIST Digit Classification with TensorFlow and Keras
+Handwritten Digit Classification with Neural Networks
 
-This project demonstrates several approaches to building and training neural networks using TensorFlow and Keras to classify handwritten digits from the MNIST dataset. It includes simple neural networks (ANNs) as well as Convolutional Neural Networks (CNNs) to illustrate the progression from basic to more advanced models for image classification tasks.
+Introduction:
 
-## Table of Contents
+This project implements a Convolutional Neural Network (CNN) with a hidden layer to classify handwritten digits from the MNIST dataset. The model is trained to recognize digits 0-9 with high accuracy.
 
-- [Overview](#overview)
-- [Dataset](#dataset)
-- [Models](#models)
-  - [Simple Neural Network](#simple-neural-network)
-  - [Deep Neural Network](#deep-neural-network)
-  - [Neural Network with Flatten Layer](#neural-network-with-flatten-layer)
-  - [Convolutional Neural Network (CNN)](#convolutional-neural-network-cnn)
-- [Confusion Matrix](#confusion-matrix)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Results](#results)
-- [Contributing](#contributing)
-- [License](#license)
+Dependencies:
 
-## Overview
+TensorFlow (>=2.0)
+Keras (included in TensorFlow)
+NumPy (for numerical computations)
+Matplotlib (for visualization)
+Seaborn (for heatmap visualization)
+Instructions:
 
-The goal of this project is to classify images of handwritten digits (0-9) using various neural network architectures. This project explores the use of different model architectures, activation functions, and techniques to achieve accurate classification of digits from the MNIST dataset.
+Installation:
+Install the required dependencies using pip:
 
-## Dataset
+Bash
+pip install tensorflow keras numpy matplotlib seaborn
+Use code with caution.
 
-The dataset used in this project is the famous [MNIST dataset](http://yann.lecun.com/exdb/mnist/), which consists of 60,000 training images and 10,000 test images. Each image is a 28x28 pixel grayscale image of a single handwritten digit.
+Run the script:
+Execute the Python script (handwritten_digit_classification.py) to train and evaluate the model:
 
-## Models
+Bash
+python handwritten_digit_classification.py
+Use code with caution.
 
-### Simple Neural Network
+Explanation:
 
-A basic neural network with a single dense layer containing 10 neurons (one for each digit) and a sigmoid activation function.
+Data Loading:
 
-```python
-model = keras.Sequential([
-    keras.layers.Dense(10, input_shape=(784,), activation='sigmoid')
-])
+The script utilizes keras.datasets.mnist.load_data() to import the MNIST dataset, splitting it into training and testing sets (X_train, y_train, X_test, y_test).
+Training images are reshaped into flattened vectors (X_train_flattened) since CNNs operate on 3D tensors.
+Model Architecture:
 
+The model follows a sequential structure (keras.Sequential) with several layers:
+Convolutional Layers (Conv2D):
+Extract spatial features from the images using two convolutional layers with:
+32 filters (detectors) in the first layer.
+64 filters in the second layer.
+Kernel size of 3x3 for capturing local patterns.
+ReLU activation for non-linearity.
+Max Pooling Layers (MaxPooling2D):
+Reduce dimensionality and capture dominant features through two max pooling layers:
+Pool size of 2x2 for downsampling the image by a factor of 2.
+Flatten Layer (Flatten):
+Convert the 2D feature maps into a 1D vector suitable for the fully-connected layer.
+Dense Layer (Hidden Layer):
+A fully-connected layer with 100 neurons and ReLU activation for dimensionality reduction and feature learning.
+Output Layer (Dense):
+A fully-connected layer with 10 neurons (one for each digit) and softmax activation for outputting probabilities for each digit.
+Model Training:
 
-### Deep Neural Network
-A deeper neural network with an additional hidden layer of 100 neurons with ReLU activation and an output layer with 10 neurons using sigmoid activation.
+The model is compiled with the Adam optimizer, sparse categorical crossentropy loss function (suitable for multi-class classification), and accuracy metric.
+Training is performed using model.fit(X_train, y_train, epochs=10), where:
+X_train is the training data.
+y_train are the corresponding labels.
+epochs=10 specifies the number of training iterations.
+Model Evaluation:
 
-model = keras.Sequential([
-    keras.layers.Dense(100, input_shape=(784,), activation='relu'),
-    keras.layers.Dense(10, activation='sigmoid')
-])
+The model's performance is evaluated on the unseen testing data using model.evaluate(X_test, y_test).
+This evaluation provides the loss and accuracy on the test set.
+Prediction and Visualization:
 
+The model makes predictions on the flattened test data (X_test_flattened).
+Predicted labels are obtained using np.argmax (index of maximum value) for each prediction vector.
+A confusion matrix (tf.math.confusion_matrix) is generated to visualize the model's performance, indicating correct and incorrect classifications for each digit.
+Seaborn's heatmap function (sn.heatmap) presents the confusion matrix with annotations for better interpretation.
+Additional Notes:
+
+You may experiment with different hyperparameters (e.g., number of filters, hidden layer size, training epochs) to potentially improve the model's performance.
+Consider data augmentation techniques to increase the size and diversity of the training dataset, potentially leading to better generalization.
+Further Exploration:
+
+Explore advanced CNN architectures like VGG16 or ResNet for potentially higher accuracies.
+Implement data preprocessing techniques like normalization for better input data representation.
+Visualize the learned features using techniques like filter visualization to understand the model's decision-making process.
